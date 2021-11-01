@@ -1,0 +1,71 @@
+name: Unity-Build
+
+on:
+  push:
+    branches:
+      - "master"
+    tags:
+      - "!*" # not a tag push
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  build-unity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v2
+      - uses: crazy-max/ghaction-docker-buildx@v3
+        name: Set up Docker Buildx
+        id: buildx
+        with:
+          buildx-version: latest
+          qemu-version: latest
+      - name: Available platforms
+        run: echo ${{ steps.buildx.outputs.platforms }}
+      - name: Generate foundation for tests
+        run: |
+          docker buildx build \
+            --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x \
+            --output . \
+            --file ./Dependencies/Dockerfile
+      
+      # Execute scripts: RuntimeUnitTestToolkit(Linux64/Mono2x)
+      # /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod UnitTestBuilder.BuildUnitTest /headless /ScriptBackend Mono2x /BuildTarget StandaloneLinux64
+      - name: Build UnitTest(Linux64, mono)
+        uses: game-ci/unity-builder@v2.0-alpha-6
+        env:
+          UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
+        with:
+          projectPath: RuntimeUnitTestToolkit
+          unityVersion: "2021.2.0f1"
+          targetPlatform: StandaloneLinux64
+          buildMethod: UnitTestBuilder.BuildUnitTest
+          customParameters: /headless /ScriptBackend Mono2x
+          versioning: None
+      - name: Execute UnitTest
+        run: ./RuntimeUnitTestToolkit/bin/UnitTest/StandaloneLinux64_Mono2x/test
+
+      # Execute scripts: Export Package
+      # /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod PackageExporter.Export
+      - name: Export unitypackage
+        uses: game-ci/unity-builder@v2.0-alpha-6
+        env:
+          UNITY_LICENSE: ${{ secrets[matrix.license] }}
+        with:
+          projectPath: RuntimeUnitTestToolkit
+          unityVersion: ${{ matrix.unity }}
+          targetPlatform: StandaloneLinux64
+          buildMethod: PackageExporter.Export
+          versioning: None
+
+      - name: check all .meta is commited
+        run: |
+          if git ls-files --others --exclude-standard -t | grep --regexp='[.]meta$'; then
+            echo "Detected .meta file generated. Do you forgot commit a .meta file?"
+            exit 1
+          else
+            echo "Great, all .meta files are commited."
+          fi
+        working-directory: RuntimeUnitTestToolkit
