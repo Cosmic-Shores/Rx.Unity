@@ -16,6 +16,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v2
+      - uses: game-ci/unity-request-activation-file@v2.0-alpha-1
       - uses: crazy-max/ghaction-docker-buildx@v3
         name: Set up Docker Buildx
         id: buildx
