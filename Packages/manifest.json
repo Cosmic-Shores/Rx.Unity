@@ -11,7 +11,7 @@
     }
   ],
   "dependencies": {
-    "com.reactive.unity.deps": "file:../Dependencies/out",
+    "com.rx.unity.deps": "file:../Dependencies/out",
     "com.cysharp.runtimeunittesttoolkit": "2.5.2",
     "com.unity.il2cppsetoptionattribute": "1.0.0",
     "com.unity.2d.sprite": "1.0.0",

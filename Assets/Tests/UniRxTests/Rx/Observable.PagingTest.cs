@@ -10,7 +10,7 @@ using Rx.Unity;
 
 namespace UniRx.Tests {
 
-    public class ZzzzObservablePagingTest
+    public class ZzzObservablePagingTest
     {
         [SetUp]
         public void Init()
@@ -403,16 +403,6 @@ namespace UniRx.Tests {
                 a.OnNext(100);
                 l.Count.Is(0);
             }
-        }
-
-        [Test]
-        public void Pairwise2()
-        {
-            var xs = Observable.Range(1, 5).Pairwise().ToArrayWait();
-            xs[0].Previous.Is(1); xs[0].Current.Is(2);
-            xs[1].Previous.Is(2); xs[1].Current.Is(3);
-            xs[2].Previous.Is(3); xs[2].Current.Is(4);
-            xs[3].Previous.Is(4); xs[3].Current.Is(5);
         }
 
         [Test]

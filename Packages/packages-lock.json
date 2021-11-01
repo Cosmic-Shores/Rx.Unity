@@ -7,7 +7,7 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
-    "com.reactive.unity.deps": {
+    "com.rx.unity.deps": {
       "version": "file:../Dependencies/out",
       "depth": 0,
       "source": "local",

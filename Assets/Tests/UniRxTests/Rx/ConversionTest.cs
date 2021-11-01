@@ -20,12 +20,6 @@ namespace UniRx.Tests.Operators
         }
 
         [Test]
-        public void AsUnitObservable()
-        {
-            Observable.Range(1, 3).AsUnitObservable().ToArrayWait().Is(Unit.Default, Unit.Default, Unit.Default);
-        }
-
-        [Test]
         public void ToObservable()
         {
             Enumerable.Range(1, 3).ToObservable(Scheduler.CurrentThread).ToArrayWait().Is(1, 2, 3);
@@ -47,22 +41,6 @@ namespace UniRx.Tests.Operators
             subject.OnNext(3);
 
             list.Is(1, 2, 3);
-        }
-
-        [Test]
-        public void AsSingleUnitObservable()
-        {
-            var subject = new Subject<int>();
-
-            var done = false;
-            subject.AsSingleUnitObservable().Subscribe(_ => done = true);
-
-            subject.OnNext(1);
-            done.IsFalse();
-            subject.OnNext(100);
-            done.IsFalse();
-            subject.OnCompleted();
-            done.IsTrue();
         }
     }
 }

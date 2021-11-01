@@ -6,7 +6,7 @@ using System.Reactive;
 using Rx.Unity;
 
 namespace UniRx.Tests {
-    public class ZzzzObservableTimeTest
+    public class ZzzObservableTimeTest
     {
         [SetUp]
         public void Init()

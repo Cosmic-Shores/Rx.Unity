@@ -1,2 +1,2 @@
 cd ./Dependencies
-docker build --output out . --no-cache
+docker build --output .. . --no-cache --progress=plain
