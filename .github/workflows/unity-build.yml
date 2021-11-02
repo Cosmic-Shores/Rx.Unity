@@ -23,6 +23,7 @@ jobs:
           qemu-version: latest
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
+      - uses: actions/checkout@v2
       - name: Generate foundation for tests
         run: docker buildx build --output . ./Dependencies
       
