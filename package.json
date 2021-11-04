@@ -1,0 +1,15 @@
+{
+    "name": "com.rx.unity",
+    "displayName": "Reactive Extensions Enrichment for Unity",
+    "version": "1.0.0",
+    "unity": "2021.2",
+    "description": "A minimalistic MVVM framework for the new Unity UI Toolkit build on EcsRx.",
+    "keywords": [ "rx", "system", "unity" ],
+    "category": "gui",
+    "dependencies": {},
+    "author": {
+        "name": "Jonas Fischer",
+        "email": "cosmicshoresdev@gmail.com",
+        "url": "https://github.com/Cosmic-Shores/Rx.Unity"
+    }
+}
