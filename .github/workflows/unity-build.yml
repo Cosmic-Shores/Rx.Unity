@@ -13,7 +13,15 @@ on:
 jobs:
   build-unity:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneLinux64
+        scriptBackend:
+          - Mono2x
+          - IL2CPP
     steps:
       - uses: docker/setup-buildx-action@v1
         name: Set up Docker Buildx
@@ -24,24 +32,28 @@ jobs:
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Generate foundation for tests
         run: docker buildx build --output . ./Dependencies
       - uses: actions/cache@v2
         with:
           path: Library
-          key: Library-Linux64-Mono2x
-      # Execute scripts: Linux64/Mono2x
+          key: Library-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
+          restore-keys:
+            Library-${{ matrix.targetPlatform }}-
+            Library-
       # /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod UnitTestBuilder.BuildUnitTest /headless /ScriptBackend Mono2x /BuildTarget StandaloneLinux64
-      - name: Build UnitTest(Linux64, mono)
+      - name: Build UnitTest(${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
         uses: game-ci/unity-builder@v2.0-alpha-6
         env:
           UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
         with:
           projectPath: ./
           unityVersion: 2021.2.0f1
-          targetPlatform: StandaloneLinux64
+          targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: UnitTestBuilder.BuildUnitTest
-          customParameters: /headless /ScriptBackend Mono2x
+          customParameters: /headless /ScriptBackend ${{ matrix.scriptBackend }}
           versioning: None
       - name: Execute UnitTest
-        run: ./bin/UnitTest/StandaloneLinux64_Mono2x/test
+        run: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test
