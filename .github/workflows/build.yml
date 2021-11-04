@@ -72,6 +72,5 @@ jobs:
           name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
           path: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
           retention-days: 1
-      - uses: actions/checkout@v2
       - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
         run: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test
