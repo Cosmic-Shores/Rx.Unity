@@ -1,8 +1,8 @@
-name: CI Publish
+name: Publish
 
 on:
   workflow_run:
-    workflows: ["Unity-Build"]
+    workflows: ["Unity-Test"]
     branches: [master]
     types:
       - completed
