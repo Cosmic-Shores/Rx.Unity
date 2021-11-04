@@ -30,7 +30,7 @@ jobs:
             ./
             !./.git/
           retention-days: 1
-  build--unity:
+  build-unity:
     if: ${{ always() }}
     needs: restore-sources
     runs-on: ubuntu-latest
@@ -44,6 +44,10 @@ jobs:
           - IL2CPP
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: restored-sources
+          path: .
       - uses: actions/cache@v2
         with:
           path: Library
