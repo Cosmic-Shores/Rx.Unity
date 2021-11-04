@@ -27,18 +27,18 @@ jobs:
       - name: Generate foundation for tests
         run: docker buildx build --output . ./Dependencies
       
-      # Execute scripts: RuntimeUnitTestToolkit(Linux64/Mono2x)
+      # Execute scripts: Linux64/Mono2x
       # /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod UnitTestBuilder.BuildUnitTest /headless /ScriptBackend Mono2x /BuildTarget StandaloneLinux64
       - name: Build UnitTest(Linux64, mono)
         uses: game-ci/unity-builder@v2.0-alpha-6
         env:
           UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
         with:
-          projectPath: RuntimeUnitTestToolkit
+          projectPath: ./
           unityVersion: 2021.2.0f1
           targetPlatform: StandaloneLinux64
           buildMethod: UnitTestBuilder.BuildUnitTest
           customParameters: /headless /ScriptBackend Mono2x
           versioning: None
       - name: Execute UnitTest
-        run: ./RuntimeUnitTestToolkit/bin/UnitTest/StandaloneLinux64_Mono2x/test
+        run: ./bin/UnitTest/StandaloneLinux64_Mono2x/test
