@@ -1,11 +1,10 @@
 {
   "dependencies": {
     "com.cysharp.runtimeunittesttoolkit": {
-      "version": "2.5.2",
+      "version": "file:../Dependencies/RuntimeUnitTestToolkit",
       "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
+      "source": "local",
+      "dependencies": {}
     },
     "com.rx.unity.deps": {
       "version": "file:../Dependencies/out",

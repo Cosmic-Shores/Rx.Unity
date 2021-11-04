@@ -210,6 +210,13 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -485,6 +492,12 @@ PlayerSettings:
   - m_BuildTarget: AndroidPlayer
     m_APIs: 0b00000008000000
     m_Automatic: 0
+  - m_BuildTarget: WindowsStandaloneSupport
+    m_APIs: 02000000
+    m_Automatic: 1
+  - m_BuildTarget: LinuxStandaloneSupport
+    m_APIs: 1100000015000000
+    m_Automatic: 1
   m_BuildTargetVRSettings: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
@@ -753,6 +766,7 @@ PlayerSettings:
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
+    Standalone: 0
     Windows Store Apps: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
