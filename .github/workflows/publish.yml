@@ -1,0 +1,20 @@
+name: CI Publish
+
+on:
+  workflow_run:
+    workflows: ["Unity-Build"]
+    types:
+      - completed
+
+jobs:
+  split-upm:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: split upm branch
+        run: |
+          git subtree split -P "$PKG_ROOT" -b upm
+          git push -fu origin upm
+        env:
+          PKG_ROOT: Assets/Src/Scripts

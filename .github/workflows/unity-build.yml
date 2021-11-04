@@ -26,11 +26,14 @@ jobs:
       - uses: actions/checkout@v2
       - name: Generate foundation for tests
         run: docker buildx build --output . ./Dependencies
-      
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-Linux64-Mono2x
       # Execute scripts: Linux64/Mono2x
       # /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod UnitTestBuilder.BuildUnitTest /headless /ScriptBackend Mono2x /BuildTarget StandaloneLinux64
       - name: Build UnitTest(Linux64, mono)
-        uses: game-ci/unity-builder@v2.0-alpha-6
+        uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
         with:
