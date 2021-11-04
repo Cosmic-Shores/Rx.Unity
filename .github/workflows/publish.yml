@@ -3,6 +3,7 @@ name: CI Publish
 on:
   workflow_run:
     workflows: ["Unity-Build"]
+    branches: [master]
     types:
       - completed
 
