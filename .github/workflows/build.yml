@@ -1,4 +1,4 @@
-name: Restore-Sources
+name: Build
 
 on:
   push:
@@ -68,19 +68,3 @@ jobs:
           name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
           path: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
           retention-days: 1
-  unity-tests:
-    needs: build-unity
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - StandaloneLinux64
-        scriptBackend:
-          - Mono2x
-          - IL2CPP
-    steps:
-      - uses: actions/checkout@v2
-      - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
-        run: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test
