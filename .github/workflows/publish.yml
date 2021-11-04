@@ -2,7 +2,7 @@ name: Publish
 
 on:
   workflow_run:
-    workflows: ["Unity-Test"]
+    workflows: ["Build"]
     branches: [master]
     types:
       - completed
