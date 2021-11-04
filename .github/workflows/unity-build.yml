@@ -13,7 +13,7 @@ on:
 jobs:
   build-unity:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 90
     steps:
       - uses: docker/setup-buildx-action@v1
         name: Set up Docker Buildx
