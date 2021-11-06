@@ -11,14 +11,14 @@
     }
   ],
   "dependencies": {
+    "com.cysharp.runtimeunittesttoolkit": "2.5.3",
     "com.rx.unity.deps": "file:../Dependencies/out",
-    "com.cysharp.runtimeunittesttoolkit": "file:../Dependencies/RuntimeUnitTestToolkit",
-    "com.unity.il2cppsetoptionattribute": "1.0.0",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ext.nunit": "1.0.6",
     "com.unity.ide.rider": "3.0.7",
     "com.unity.ide.visualstudio": "2.0.11",
     "com.unity.ide.vscode": "1.2.4",
+    "com.unity.il2cppsetoptionattribute": "1.0.0",
     "com.unity.inputsystem": "1.1.1",
     "com.unity.test-framework": "1.1.30",
     "com.unity.toolchain.win-x86_64-linux-x86_64": "0.1.21-preview",
