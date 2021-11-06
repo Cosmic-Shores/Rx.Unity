@@ -98,20 +98,20 @@ jobs:
         cfg:
           - ${{fromJson(needs.generate-environments.outputs.matrix)}}
     runs-on: ${{ matrix.cfg.os }}
-    if: matrix.cfg.runTests
     defaults:
       run:
         working-directory: ${{ matrix.cfg.buildArtifactPath }}
     steps:
       - uses: actions/download-artifact@v2
+        if: ${{ matrix.cfg.runTests }}
         with:
           name: ${{ matrix.cfg.buildArtifactName }}
           path: ${{ matrix.cfg.buildArtifactPath }}
       - run: 'chmod +x ./test'
-        if: ${{ matrix.cfg.os == 'ubuntu-latest' }}
+        if: ${{ matrix.cfg.os == 'ubuntu-latest' && matrix.cfg.runTests }}
       - name: Execute UnitTest (${{ matrix.cfg.targetPlatform }}, ${{ matrix.cfg.scriptBackend }})
-        if: ${{ matrix.cfg.os != 'macos-latest' }}
+        if: ${{ matrix.cfg.os != 'macos-latest' && matrix.cfg.runTests }}
         run: ./test
       - name: Execute UnitTest (${{ matrix.cfg.targetPlatform }}, ${{ matrix.cfg.scriptBackend }})
-        if: ${{ matrix.cfg.os == 'macos-latest' }}
+        if: ${{ matrix.cfg.os == 'macos-latest' && matrix.cfg.runTests }}
         run: open -a ./test.app
