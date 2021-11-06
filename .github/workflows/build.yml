@@ -22,8 +22,7 @@ jobs:
           node-version: 16.x
       - uses: actions/checkout@v2
       - run: node ./generate-environments.js
-        with:
-          working-directory: ./.github/workflows
+        working-directory: ./.github/workflows
       - name: Read environments.json
         id: environments
         uses: juliangruber/read-file-action@v1
@@ -97,6 +96,7 @@ jobs:
       fail-fast: false
       matrix:
         stack: ${{fromJSON(needs.generate-environments.outputs.matrix)}}
+    if: ${{ matrix.runTests }}
     runs-on: ${{ matrix.os }}
     defaults:
       run:
