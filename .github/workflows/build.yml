@@ -77,7 +77,7 @@ jobs:
           retention-days: 1
   run-tests:
     if: ${{ always() }}
-    needs: ["build-unity-StandaloneLinux64-Mono2x", "build-unity-StandaloneLinux64-IL2CPP"]
+    needs: [build-unity-StandaloneLinux64-Mono2x, build-unity-StandaloneLinux64-IL2CPP]
     strategy:
       fail-fast: false
       matrix:
@@ -87,6 +87,7 @@ jobs:
           - Mono2x
           - IL2CPP
     runs-on: ubuntu-latest
+    steps:
       - uses: actions/download-artifact@v2
         with:
           name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
