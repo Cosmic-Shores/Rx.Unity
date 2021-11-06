@@ -28,18 +28,34 @@ const getRunsOn = (targetPlatform) => {
 const canBeTested = (targetPlatform) => {
     return targetPlatform.indexOf('Standalone') !== -1;
 };
-const matrixIncludes = buildMatrix({
-    targetPlatform: [
-        "StandaloneLinux64",
-        "StandaloneWindows",
-        "StandaloneWindows64",
-        "StandaloneOSX",
-        "Android"
-    ],
-    scriptBackend: [
-        "Mono2x"
-    ]
-}).map(obj => {
+
+// const baseMatrix = buildMatrix({
+//     targetPlatform: [
+//         "StandaloneLinux64",
+//         "StandaloneWindows",
+//         "StandaloneWindows64",
+//         "StandaloneOSX",
+//         "Android"
+//     ],
+//     scriptBackend: [
+//         "Mono2x",
+//         "IL2CPP"
+//     ]
+// }).concat([
+//     {
+//         targetPlatform: "iOS",
+//         scriptBackend: "IL2CPP"
+//     }
+// ]);
+
+const baseMatrix = [
+    {
+        targetPlatform: "StandaloneOSX",
+        scriptBackend: "Mono2x"
+    }
+];
+
+const matrixIncludes = baseMatrix.map(obj => {
     return {
         ...obj,
         os: getRunsOn(obj.targetPlatform),
