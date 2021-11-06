@@ -10,6 +10,8 @@ on:
     branches:
       - "master"
 
+env:
+	MATRIX: "{\"include\":[{\"targetPlatform\":\"StandaloneLinux64\",\"scriptBackend\":\"Mono2x\",\"runOs\":\"ubuntu-latest\",\"buildArtifactName\":\"UnitTestCli_StandaloneLinux64_Mono2x\",\"buildArtifactPath\":\"./bin/UnitTest/StandaloneLinux64_Mono2x\"},{\"targetPlatform\":\"StandaloneWindows\",\"scriptBackend\":\"Mono2x\",\"runOs\":\"windows-latest\",\"buildArtifactName\":\"UnitTestCli_StandaloneWindows_Mono2x\",\"buildArtifactPath\":\"./bin/UnitTest/StandaloneWindows_Mono2x\"},{\"targetPlatform\":\"StandaloneWindows64\",\"scriptBackend\":\"Mono2x\",\"runOs\":\"windows-latest\",\"buildArtifactName\":\"UnitTestCli_StandaloneWindows64_Mono2x\",\"buildArtifactPath\":\"./bin/UnitTest/StandaloneWindows64_Mono2x\"},{\"targetPlatform\":\"StandaloneOSX\",\"scriptBackend\":\"Mono2x\",\"runOs\":\"macos-latest\",\"buildArtifactName\":\"UnitTestCli_StandaloneOSX_Mono2x\",\"buildArtifactPath\":\"./bin/UnitTest/StandaloneOSX_Mono2x\"},{\"targetPlatform\":\"Android\",\"scriptBackend\":\"Mono2x\",\"runOs\":\"ubuntu-latest\",\"buildArtifactName\":\"UnitTestCli_Android_Mono2x\",\"buildArtifactPath\":\"./bin/UnitTest/Android_Mono2x\"}]}"
 jobs:
   generate-environments:
     runs-on: ubuntu-latest
@@ -29,7 +31,7 @@ jobs:
         with:
           path: ./.github/workflows/environments.json
       - id: set-matrix
-        run: echo "::set-output name=matrix::${{ steps.environments.outputs.content }}"
+        run: echo "::set-output name=matrix::$MATRIX"
   restore-sources:
     runs-on: ubuntu-latest
     steps:
