@@ -59,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        stack: ${{fromJSON(needs.generate-environments.outputs.matrix)}}
+        stack: ${{fromJson(needs.generate-environments.outputs.matrix)}}
     name: build-unity-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
     steps:
       - uses: actions/checkout@v2
