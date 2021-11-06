@@ -10,9 +10,6 @@ on:
     branches:
       - "master"
 
-env:
-  MATRIX: "{\"include\":[{\"targetPlatform\":\"StandaloneLinux64\",\"scriptBackend\":\"Mono2x\",\"runOs\":\"ubuntu-latest\",\"buildArtifactName\":\"UnitTestCli_StandaloneLinux64_Mono2x\",\"buildArtifactPath\":\"./bin/UnitTest/StandaloneLinux64_Mono2x\"}]}"
-
 jobs:
   generateEnvironments:
     runs-on: ubuntu-latest
@@ -32,7 +29,7 @@ jobs:
         with:
           path: ./.github/workflows/environments.json
       - id: set-matrix
-        run: echo "::set-output name=matrix::$MATRIX"
+        run: echo "::set-output name=matrix::${{ steps.environments.outputs.content }}"
   restore-sources:
     runs-on: ubuntu-latest
     steps:
