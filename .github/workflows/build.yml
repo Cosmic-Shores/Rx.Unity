@@ -91,7 +91,7 @@ jobs:
           name: ${{ matrix.cfg.buildArtifactName }}
           path: |
             ${{ matrix.cfg.buildArtifactPath }}
-            !x${{ matrix.cfg.buildArtifactPath }}/test_BackUpThisFolder_ButDontShipItWithYourGame
+            !${{ matrix.cfg.buildArtifactPath }}/test_BackUpThisFolder_ButDontShipItWithYourGame
           retention-days: 1
   run-tests-linux:
     needs: [build-unity, generateEnvironments]
