@@ -42,6 +42,7 @@ jobs:
         scriptBackend:
           - Mono2x
           - IL2CPP
+    name: build-unity-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -76,7 +77,17 @@ jobs:
           retention-days: 1
   run-tests:
     if: ${{ always() }}
-    needs: build-unity
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneLinux64
+        scriptBackend:
+          - Mono2x
+          - IL2CPP
+    needs:
+      - build-unity-StandaloneLinux64-Mono2x
+      - build-unity-StandaloneLinux64-IL2CPP
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
