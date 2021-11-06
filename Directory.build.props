@@ -1,9 +1,0 @@
-<Project>
-
-  <PropertyGroup Condition="$(MSBuildProjectName.Contains('Tests'))">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Rx.Unity.Tests.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>false</DelaySign>
-  </PropertyGroup>
-
-</Project>
