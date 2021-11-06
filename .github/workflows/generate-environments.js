@@ -43,7 +43,6 @@ const matrixIncludes = buildMatrix({
     return {
         ...obj,
         os: getRunsOn(obj.targetPlatform),
-        runTests: canBeTested(obj.targetPlatform),
         buildArtifactName: `UnitTestCli_${obj.targetPlatform}_${obj.scriptBackend}`,
         buildArtifactPath: `./bin/UnitTest/${obj.targetPlatform}_${obj.scriptBackend}`
     };
