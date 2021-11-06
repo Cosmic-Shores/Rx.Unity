@@ -49,6 +49,6 @@ const matrixIncludes = buildMatrix({
     };
 });
 
-const content = JSON.stringify({include: matrixIncludes});
+const content = JSON.stringify({include: matrixIncludes}).replace("\"", "\\\"");
 const fs = require('fs');
 fs.writeFileSync('./environments.json', content);
