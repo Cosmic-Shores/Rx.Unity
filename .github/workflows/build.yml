@@ -56,8 +56,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfg:
-          - ${{fromJson(needs.generate-environments.outputs.matrix)}}
+        cfg: ${{fromJson(needs.generate-environments.outputs.matrix)}}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -95,8 +94,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfg:
-          - ${{fromJson(needs.generate-environments.outputs.matrix)}}
+        cfg: ${{fromJson(needs.generate-environments.outputs.matrix)}}
     runs-on: ${{ matrix.cfg.os }}
     defaults:
       run:
