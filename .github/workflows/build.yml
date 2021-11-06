@@ -11,8 +11,29 @@ on:
       - "master"
 
 jobs:
-  run-tests:
+  restore-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/setup-buildx-action@v1
+        name: Set up Docker Buildx
+        id: buildx
+        with:
+          buildx-version: latest
+          qemu-version: latest
+      - uses: actions/checkout@v2
+      - name: Generate foundation for tests
+        run: docker buildx build --output . ./Dependencies
+      - uses: actions/upload-artifact@v2
+        with:
+          name: restored-sources
+          path: |
+            ./
+            !./.git/
+          retention-days: 1
+  build-unity:
     if: ${{ always() }}
+    needs: restore-sources
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -20,7 +41,49 @@ jobs:
           - StandaloneLinux64
         scriptBackend:
           - Mono2x
-          - IL2CPP
+    name: build-unity-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: restored-sources
+          path: .
+      - uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
+          restore-keys:
+            Library-${{ matrix.targetPlatform }}-
+            Library-
+      # /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod UnitTestBuilder.BuildUnitTest /headless /ScriptBackend Mono2x /BuildTarget StandaloneLinux64
+      - name: Build UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
+        uses: game-ci/unity-builder@v2.0-alpha-6
+        env:
+          UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
+        with:
+          projectPath: ./
+          unityVersion: 2021.2.0f1
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildMethod: UnitTestBuilder.BuildUnitTest
+          customParameters: /headless /ScriptBackend ${{ matrix.scriptBackend }}
+          versioning: None
+      - uses: actions/upload-artifact@v2
+        with:
+          name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+          path: |
+            ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+            !./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test_BackUpThisFolder_ButDontShipItWithYourGame
+          retention-days: 1
+  run-tests:
+    if: ${{ always() }}
+    needs: build-unity
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneLinux64
+        scriptBackend:
+          - Mono2x
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v2
