@@ -96,7 +96,7 @@ jobs:
       fail-fast: false
       matrix:
         stack: ${{fromJSON(needs.generate-environments.outputs.matrix)}}
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runOs }}
     defaults:
       run:
         working-directory: ${{ matrix.buildArtifactPath }}
@@ -106,10 +106,10 @@ jobs:
           name: ${{ matrix.buildArtifactName }}
           path: ${{ matrix.buildArtifactPath }}
       - run: 'chmod +x ./test'
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: ${{ matrix.runOs == 'ubuntu-latest' }}
       - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
-        if: ${{ matrix.os != 'macos-latest' }}
+        if: ${{ matrix.runOs != 'macos-latest' }}
         run: ./test
       - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
-        if: ${{ matrix.os == 'macos-latest' }}
+        if: ${{ matrix.runOs == 'macos-latest' }}
         run: open -a ./test.app

@@ -42,7 +42,7 @@ const matrixIncludes = buildMatrix({
 }).map(obj => {
     return {
         ...obj,
-        os: getRunsOn(obj.targetPlatform),
+        runOs: getRunsOn(obj.targetPlatform),
         buildArtifactName: `UnitTestCli_${obj.targetPlatform}_${obj.scriptBackend}`,
         buildArtifactPath: `./bin/UnitTest/${obj.targetPlatform}_${obj.scriptBackend}`
     };
