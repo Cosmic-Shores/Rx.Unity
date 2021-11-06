@@ -96,8 +96,6 @@ jobs:
       matrix:
         cfg: ${{fromJson(needs.generate-environments.outputs.matrix)}}
     runs-on: ${{ matrix.cfg.os }}
-    defaults:
-      run:
     steps:
       - uses: actions/download-artifact@v2
         if: ${{ matrix.cfg.runTests }}
