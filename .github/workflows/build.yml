@@ -39,6 +39,7 @@ jobs:
       matrix:
         targetPlatform:
           - StandaloneLinux64
+          - StandaloneWindows64
         scriptBackend:
           - Mono2x
     name: build-unity-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
@@ -74,7 +75,7 @@ jobs:
             ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
             !./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test_BackUpThisFolder_ButDontShipItWithYourGame
           retention-days: 1
-  run-tests:
+  run-tests-linux:
     if: ${{ always() }}
     needs: build-unity
     strategy:
@@ -85,12 +86,35 @@ jobs:
         scriptBackend:
           - Mono2x
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
     steps:
       - uses: actions/download-artifact@v2
         with:
           name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
           path: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
-      - run: 'ls -ld ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}'
-      - run: 'chmod +x ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test'
+      - run: 'chmod +x ./test'
       - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
-        run: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test
+        run: ./test
+  run-tests-windows:
+    if: ${{ always() }}
+    needs: build-unity
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform:
+          - StandaloneWindows64
+        scriptBackend:
+          - Mono2x
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+          path: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+      - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
+        run: ./test
