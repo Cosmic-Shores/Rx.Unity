@@ -14,7 +14,7 @@ env:
   MATRIX: "{\"include\":[{\"targetPlatform\":\"StandaloneLinux64\",\"scriptBackend\":\"Mono2x\",\"runOs\":\"ubuntu-latest\",\"buildArtifactName\":\"UnitTestCli_StandaloneLinux64_Mono2x\",\"buildArtifactPath\":\"./bin/UnitTest/StandaloneLinux64_Mono2x\"}]}"
 
 jobs:
-  generate-environments:
+  generateEnvironments:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -54,13 +54,13 @@ jobs:
           retention-days: 1
   build-unity:
     if: ${{ always() }}
-    needs: generate-environments
+    needs: generateEnvironments
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        stack: ${{fromJson(needs.generate-environments.outputs.matrix)}}
-    name: build-unity-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
+        cfg:
+          - ${{fromJson(needs.generateEnvironments.outputs.matrix)}}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
@@ -70,35 +70,35 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: Library
-          key: Library-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
+          key: Library-${{ matrix.cfg.targetPlatform }}-${{ matrix.cfg.scriptBackend }}
           restore-keys:
-            Library-${{ matrix.targetPlatform }}-
+            Library-${{ matrix.cfg.targetPlatform }}-
             Library-
       # /opt/Unity/Editor/Unity -quit -batchmode -nographics -silent-crashes -logFile -projectPath . -executeMethod UnitTestBuilder.BuildUnitTest /headless /ScriptBackend Mono2x /BuildTarget StandaloneLinux64
-      - name: Build UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
+      - name: Build UnitTest (${{ matrix.cfg.targetPlatform }}, ${{ matrix.cfg.scriptBackend }})
         uses: game-ci/unity-builder@v2
         env:
           UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
         with:
           projectPath: ./
           unityVersion: 2021.2.0f1
-          targetPlatform: ${{ matrix.targetPlatform }}
+          targetPlatform: ${{ matrix.cfg.targetPlatform }}
           buildMethod: UnitTestBuilder.BuildUnitTest
-          customParameters: /headless /ScriptBackend ${{ matrix.scriptBackend }}
+          customParameters: /headless /ScriptBackend ${{ matrix.cfg.scriptBackend }}
           versioning: None
       - uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.buildArtifactName }}
+          name: ${{ matrix.cfg.buildArtifactName }}
           path: |
-            ${{ matrix.buildArtifactPath }}
-            !${{ matrix.buildArtifactPath }}/test_BackUpThisFolder_ButDontShipItWithYourGame
+            ${{ matrix.cfg.buildArtifactPath }}
+            !x${{ matrix.cfg.buildArtifactPath }}/test_BackUpThisFolder_ButDontShipItWithYourGame
           retention-days: 1
   run-tests-linux:
-    needs: [build-unity, generate-environments]
+    needs: [build-unity, generateEnvironments]
     strategy:
       fail-fast: false
       matrix:
-        stack: ${{fromJSON(needs.generate-environments.outputs.matrix)}}
+        stack: ${{fromJSON(needs.generateEnvironments.outputs.matrix)}}
     runs-on: ${{ matrix.runOs }}
     defaults:
       run:
