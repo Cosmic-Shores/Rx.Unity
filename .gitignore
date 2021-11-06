@@ -65,16 +65,12 @@ sysinfo.txt
 /Dependencies/Dependencies/bin
 /Dependencies/Dependencies/obj
 /Dependencies/out
-/Assets/Tests/Helper/**/*.meta
-/Assets/Tests/UniRxTests/**/*.meta
+/Assets/Tests.meta
+/Assets/Tests/**/*.meta
 /Assets/Tests/Tests.System.Reactive/obj
-/Assets/Tests/Tests.System.Reactive/obj.meta
 /Assets/Tests/Tests.System.Reactive
-/Assets/Tests/Tests.System.Reactive.meta
 /Assets/Tests/Microsoft.Reactive.Testing
-/Assets/Tests/Microsoft.Reactive.Testing.meta
 /Assets/Tests/Rx.Data.Tests
-/Assets/Tests/Rx.Data.Tests.meta
 
 # Crashlytics generated file
 crashlytics-build.properties
