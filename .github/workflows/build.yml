@@ -85,18 +85,8 @@ jobs:
         scriptBackend:
           - Mono2x
           - IL2CPP
-    needs:
-      - build-unity-StandaloneLinux64-Mono2x
-      - build-unity-StandaloneLinux64-IL2CPP
+    needs: [build-unity-StandaloneLinux64-Mono2x, build-unity-StandaloneLinux64-IL2CPP]
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - StandaloneLinux64
-        scriptBackend:
-          - Mono2x
-          - IL2CPP
       - uses: actions/download-artifact@v2
         with:
           name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
