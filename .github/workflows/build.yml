@@ -98,7 +98,7 @@ jobs:
         cfg:
           - ${{fromJson(needs.generate-environments.outputs.matrix)}}
     runs-on: ${{ matrix.cfg.os }}
-    if: ${{ matrix.cfg.runTests }}
+    if: matrix.cfg.runTests
     defaults:
       run:
         working-directory: ${{ matrix.cfg.buildArtifactPath }}
