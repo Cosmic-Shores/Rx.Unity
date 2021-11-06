@@ -71,6 +71,7 @@ sysinfo.txt
 /Assets/Tests/Tests.System.Reactive
 /Assets/Tests/Microsoft.Reactive.Testing
 /Assets/Tests/Rx.Data.Tests
+/.github/workflows/environments.json
 
 # Crashlytics generated file
 crashlytics-build.properties

@@ -11,6 +11,26 @@ on:
       - "master"
 
 jobs:
+  generate-environments:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - uses: actions/checkout@v2
+      - run: node ./generate-environments.js
+        with:
+          working-directory: ./.github/workflows
+      - name: Read environments.json
+        id: environments
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: ./.github/workflows/environments.json
+      - id: set-matrix
+        run: echo "::set-output name=matrix::${{ steps.environments.outputs.content }}"
   restore-sources:
     runs-on: ubuntu-latest
     steps:
@@ -32,20 +52,12 @@ jobs:
           retention-days: 1
   build-unity:
     if: ${{ always() }}
-    needs: restore-sources
+    needs: [restore-sources, generate-environments]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        targetPlatform:
-          - StandaloneLinux64
-          - StandaloneWindows
-          - StandaloneWindows64
-          - StandaloneOSX
-          - iOS
-          - Android
-        scriptBackend:
-          - Mono2x
+        stack: ${{fromJSON(needs.generate-environments.outputs.matrix)}}
     name: build-unity-${{ matrix.targetPlatform }}-${{ matrix.scriptBackend }}
     steps:
       - uses: actions/checkout@v2
@@ -74,51 +86,32 @@ jobs:
           versioning: None
       - uses: actions/upload-artifact@v2
         with:
-          name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+          name: ${{ matrix.buildArtifactName }}
           path: |
-            ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
-            !./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}/test_BackUpThisFolder_ButDontShipItWithYourGame
+            ${{ matrix.buildArtifactPath }}
+            !${{ matrix.buildArtifactPath }}/test_BackUpThisFolder_ButDontShipItWithYourGame
           retention-days: 1
   run-tests-linux:
-    if: ${{ always() }}
-    needs: build-unity
+    needs: [build-unity, generate-environments]
     strategy:
       fail-fast: false
       matrix:
-        targetPlatform:
-          - StandaloneLinux64
-        scriptBackend:
-          - Mono2x
-    runs-on: ubuntu-latest
+        stack: ${{fromJSON(needs.generate-environments.outputs.matrix)}}
+    if: ${{ matrix.runTests }}
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
-        working-directory: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+        working-directory: ${{ matrix.buildArtifactPath }}
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
-          path: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
+          name: ${{ matrix.buildArtifactName }}
+          path: ${{ matrix.buildArtifactPath }}
       - run: 'chmod +x ./test'
+        if: ${{ matrix.os == 'ubuntu-latest' }}
       - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
+        if: ${{ matrix.os != 'macos-latest' }}
         run: ./test
-  run-tests-windows:
-    if: ${{ always() }}
-    needs: build-unity
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - StandaloneWindows64
-        scriptBackend:
-          - Mono2x
-    runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: UnitTestCli_${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
-          path: ./bin/UnitTest/${{ matrix.targetPlatform }}_${{ matrix.scriptBackend }}
       - name: Execute UnitTest (${{ matrix.targetPlatform }}, ${{ matrix.scriptBackend }})
-        run: ./test
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: open -a ./test.app
