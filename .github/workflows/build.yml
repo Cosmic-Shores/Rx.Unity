@@ -51,7 +51,7 @@ jobs:
           retention-days: 1
   build-unity:
     if: ${{ always() }}
-    needs: [build-unity, generate-environments]
+    needs: [restore-sources, generate-environments]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
