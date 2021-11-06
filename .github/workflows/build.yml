@@ -96,7 +96,6 @@ jobs:
       fail-fast: false
       matrix:
         stack: ${{fromJSON(needs.generate-environments.outputs.matrix)}}
-    if: ${{ matrix.runTests }}
     runs-on: ${{ matrix.os }}
     defaults:
       run:
