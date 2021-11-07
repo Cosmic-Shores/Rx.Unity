@@ -26,34 +26,37 @@ const getRunsOn = (targetPlatform) => {
     return 'ubuntu-latest';
 };
 const canBeTested = (targetPlatform) => {
-    return targetPlatform.indexOf('Standalone') !== -1;
+    return targetPlatform !== 'StandaloneOSX' && targetPlatform.indexOf('Standalone') !== -1;
 };
 
-// const baseMatrix = buildMatrix({
-//     targetPlatform: [
-//         "StandaloneLinux64",
-//         "StandaloneWindows",
-//         "StandaloneWindows64",
-//         "StandaloneOSX",
-//         "Android"
-//     ],
-//     scriptBackend: [
-//         "Mono2x",
-//         "IL2CPP"
-//     ]
-// }).concat([
-//     {
-//         targetPlatform: "iOS",
-//         scriptBackend: "IL2CPP"
-//     }
-// ]);
+const baseMatrix = buildMatrix({
+    targetPlatform: [
+        "StandaloneLinux64",
+        "StandaloneWindows",
+        "StandaloneWindows64",
+        "StandaloneOSX",
+        "Android"
+    ],
+    scriptBackend: [
+        "Mono2x",
+        "IL2CPP"
+    ]
+}).concat(buildMatrix({
+    targetPlatform: [
+        "iOS",
+        "WebGL"
+    ],
+    scriptBackend: [
+        "IL2CPP"
+    ]
+}));
 
-const baseMatrix = [
-    {
-        targetPlatform: "StandaloneOSX",
-        scriptBackend: "Mono2x"
-    }
-];
+// const baseMatrix = [
+//     {
+//         targetPlatform: "StandaloneOSX",
+//         scriptBackend: "Mono2x"
+//     }
+// ];
 
 const matrixIncludes = baseMatrix.map(obj => {
     return {
