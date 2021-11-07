@@ -43,6 +43,7 @@ const baseMatrix = buildMatrix({
     ]
 }).concat(buildMatrix({
     targetPlatform: [
+        "WindowsStoreApps",
         "iOS",
         "WebGL"
     ],
