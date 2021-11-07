@@ -47,6 +47,10 @@ class Tasks {
         .pipe(replace("ThreadPoolScheduler.Instance", "Rx.Unity.Concurrency.ThreadPoolOnlyScheduler.Instance"))
         .pipe(threadPoolSchedulerReplacementFilter.restore)
         .pipe(replace("public class ", "public partial class "))
+        .pipe(replace("public void ForEachAsync_DisposeThrows()", "private void ForEachAsync_DisposeThrows()"))
+        .pipe(replace("public void Virtual_ThreadSafety()", "private void Virtual_ThreadSafety())"))        
+        .pipe(replace("public void Generate_TimeSpan_DisposeLater()", "private void Generate_TimeSpan_DisposeLater()"))
+        .pipe(replace("public void Generate_DateTimeOffset_DisposeLater()", "private void Generate_DateTimeOffset_DisposeLater()"))
         .pipe(dest(path.join(__dirname, "../Tests/Tests.System.Reactive")));
     }
 

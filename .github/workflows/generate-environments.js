@@ -32,8 +32,9 @@ const canBeTested = (targetPlatform) => {
 const baseMatrix = buildMatrix({
     targetPlatform: [
         "StandaloneLinux64",
-        "StandaloneOSX",
-        "Android"
+        "StandaloneWindows64",
+        "StandaloneOSX"
+        //"Android"
     ],
     scriptBackend: [
         "Mono2x",
@@ -41,8 +42,7 @@ const baseMatrix = buildMatrix({
     ]
 }).concat(buildMatrix({
     targetPlatform: [
-        "StandaloneWindows",
-        "StandaloneWindows64"
+        "StandaloneWindows"
     ],
     scriptBackend: [
         "Mono2x"
