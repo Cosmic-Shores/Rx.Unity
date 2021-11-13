@@ -49,8 +49,6 @@ class Tasks {
         .pipe(replace("public class ", "public partial class "))
         .pipe(replace("public void ForEachAsync_DisposeThrows()", "private void ForEachAsync_DisposeThrows()")) // sort of a workaround (as [Trait("SkipCI", "true")] isn't ignored)
         .pipe(replace("public void Virtual_ThreadSafety()", "private void Virtual_ThreadSafety()")) // sort of a workaround (as [Trait("SkipCI", "true")] isn't ignored)
-        .pipe(replace("public void Generate_TimeSpan_DisposeLater()", "private void Generate_TimeSpan_DisposeLater()")) // pure testing
-        .pipe(replace("public void Generate_DateTimeOffset_DisposeLater()", "private void Generate_DateTimeOffset_DisposeLater()")) // pure testing
         .pipe(replace("public void Generate_LongRunning1()", "private void Generate_LongRunning1()")) // pure testing
         .pipe(replace("public void Generate_LongRunning2()", "private void Generate_LongRunning2()")) // pure testing
         .pipe(replace("public void Repeat_Inf_LongRunning()", "private void Repeat_Inf_LongRunning()")) // pure testing
