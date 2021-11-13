@@ -49,8 +49,8 @@ const baseMatrix = buildMatrix({
     ]
 })).concat(buildMatrix({
     targetPlatform: [
-        "iOS",
-        "WebGL"
+        "iOS"
+        // "WebGL"
     ],
     scriptBackend: [
         "IL2CPP"
