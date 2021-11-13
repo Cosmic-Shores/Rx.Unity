@@ -6,7 +6,9 @@
     "description": "A minimalistic MVVM framework for the new Unity UI Toolkit build on EcsRx.",
     "keywords": [ "rx", "system", "unity" ],
     "category": "gui",
-    "dependencies": {},
+    "dependencies": {
+        "com.unity.modules.animation": "1.0.0"
+    },
     "author": {
         "name": "Jonas Fischer",
         "email": "cosmicshoresdev@gmail.com",
