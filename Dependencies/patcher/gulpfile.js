@@ -38,6 +38,7 @@ class Tasks {
                 "Tests/Linq/ObservableSafetyTest.cs",
                 "Tests/Linq/QbservableTest.cs",
                 "Tests/Linq/QbservableExTest.cs",
+                "Tests/Linq/GenerateTest.cs", // pure testing
                 "obj/**/*.cs"
             ],
             nocase: true
@@ -47,10 +48,10 @@ class Tasks {
         .pipe(replace("ThreadPoolScheduler.Instance", "Rx.Unity.Concurrency.ThreadPoolOnlyScheduler.Instance"))
         .pipe(threadPoolSchedulerReplacementFilter.restore)
         .pipe(replace("public class ", "public partial class "))
-        .pipe(replace("public void ForEachAsync_DisposeThrows()", "private void ForEachAsync_DisposeThrows()"))
-        .pipe(replace("public void Virtual_ThreadSafety()", "private void Virtual_ThreadSafety()"))        
-        .pipe(replace("public void Generate_TimeSpan_DisposeLater()", "private void Generate_TimeSpan_DisposeLater()"))
-        .pipe(replace("public void Generate_DateTimeOffset_DisposeLater()", "private void Generate_DateTimeOffset_DisposeLater()"))
+        .pipe(replace("public void ForEachAsync_DisposeThrows()", "private void ForEachAsync_DisposeThrows()")) // sort of a workaround (as [Trait("SkipCI", "true")] isn't ignored)
+        .pipe(replace("public void Virtual_ThreadSafety()", "private void Virtual_ThreadSafety()")) // sort of a workaround (as [Trait("SkipCI", "true")] isn't ignored)
+        .pipe(replace("public void Generate_TimeSpan_DisposeLater()", "private void Generate_TimeSpan_DisposeLater()")) // pure testing
+        .pipe(replace("public void Generate_DateTimeOffset_DisposeLater()", "private void Generate_DateTimeOffset_DisposeLater()")) // pure testing
         .pipe(dest(path.join(__dirname, "../Tests/Tests.System.Reactive")));
     }
 
@@ -64,6 +65,7 @@ class Tasks {
             nocase: true
         }))
         .pipe(print(filepath => `built: ${filepath}`))
+        .pipe(replace("public class ReactiveTest", "public partial class ReactiveTest")) // just so we can log some infos
         .pipe(dest(path.join(__dirname, "../Tests/Microsoft.Reactive.Testing")));
     }
 
