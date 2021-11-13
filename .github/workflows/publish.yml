@@ -1,12 +1,16 @@
 name: Publish
 
 on:
-  workflow_dispatch: {}
+  workflow_run:
+    workflows: ["Build"]
+    branches: [master]
+    types:
+      - completed
 
 jobs:
   split-upm:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
       - name: split upm branch
