@@ -5,7 +5,7 @@
 [![License](https://badgen.net/github/license/Naereen/Strapdown.js)](https://github.com/Cosmic-Shores/Rx.Unity/blob/master/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
-An attempt at building a lightweight layer on top of System.Reactive to add support for Unity in a similar fashion as one using UniRx is used to.
+A lightweight layer on top of System.Reactive to add support for Unity in a similar fashion as one using UniRx is used to. Thus one can enjoy the improvement made in System.Reactive over the years and consume libraries using it with ease.
 
 Right now it requires some changes to System.Reactive in order to work but I'll try and create a PR to integrate required changes to the official System.Reactive repo soon.
 
