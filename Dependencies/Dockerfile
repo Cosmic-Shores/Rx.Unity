@@ -15,7 +15,8 @@ RUN npm ci
 
 FROM alpine/git AS rx-retriver
 WORKDIR /app
-RUN git clone --branch rxnet-v5.0.0 --depth 1 https://github.com/dotnet/reactive.git
+# git clone --branch rxnet-v5.0.0 --depth 1 https://github.com/dotnet/reactive.git
+RUN git clone --branch PrivateTypesTestSimplification --depth 1 https://github.com/Cosmic-Shores/reactive.git
 RUN cp ./reactive/Rx.NET/Source/Directory.build.props ./reactive/Rx.NET/Source/src/System.Reactive/Directory.build.props
 
 FROM patcher-build AS rx-patcher
