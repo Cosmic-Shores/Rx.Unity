@@ -27,7 +27,7 @@ const getRunsOn = (targetPlatform) => {
 };
 const getBuildOn = (targetPlatform) => {
     if (targetPlatform.indexOf('Windows') !== -1)
-        return 'windows-latest';
+        return 'macos-latest';
     return 'ubuntu-latest';
 };
 const canBeTested = (targetPlatform) => {
