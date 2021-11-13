@@ -27,7 +27,7 @@ namespace Rx.Unity {
 
         private static void InitSchedulerDefaults() {
             SchedulerDefaults.TimeBasedOperations = UnityMainThreadScheduler.Instance;
-#if WEB_GL
+#if UNITY_WEBGL
             SchedulerDefaults.AsyncConversions = UnityMainThreadScheduler.Instance;
 #else
             SchedulerDefaults.AsyncConversions = DefaultScheduler.Instance;
