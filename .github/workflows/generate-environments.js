@@ -25,11 +25,6 @@ const getRunsOn = (targetPlatform) => {
         return 'macos-latest';
     return 'ubuntu-latest';
 };
-const getBuildOn = (targetPlatform) => {
-    if (targetPlatform.indexOf('Windows') !== -1)
-        return 'macos-latest';
-    return 'ubuntu-latest';
-};
 const canBeTested = (targetPlatform) => {
     return targetPlatform !== 'StandaloneOSX' && targetPlatform.indexOf('Standalone') !== -1;
 };
@@ -73,7 +68,6 @@ const matrixIncludes = baseMatrix.map(obj => {
     return {
         ...obj,
         os: getRunsOn(obj.targetPlatform),
-        buildOs: getBuildOn(obj.targetPlatform),
         runTests: canBeTested(obj.targetPlatform),
         buildArtifactName: `UnitTestCli_${obj.targetPlatform}_${obj.scriptBackend}`,
         buildArtifactPath: `./bin/UnitTest/${obj.targetPlatform}_${obj.scriptBackend}`

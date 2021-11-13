@@ -52,7 +52,7 @@ jobs:
   build-unity:
     if: ${{ always() }}
     needs: [restore-sources, generate-environments]
-    runs-on: ${{ matrix.cfg.buildOs }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
