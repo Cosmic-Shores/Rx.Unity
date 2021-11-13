@@ -46,8 +46,17 @@ changes:
 - removed serialization support ReactiveDictionary
 - removed IOptimizedObservable stuff
 
+### Errors in Subscribers:
+There's a bit of a gotcha with the changes that have been made in _System.Reactive_ since _UniRx_ was forked:
+
+If you have something like a subject and a direct subscriber to it throws an exception handleing an `OnNext()` everything works as expected.
+
+However if you now introduce an operator between your subject and subscribe to that instead, an unhandled exception at the same spot as before, can lead to the source subject stopping emit future values (I haven't investigated the exact details on what happens to the subject beyond this description here). In UniRx this wasn't the case and that behaviour was ensured by the `DurabilityTest`-class.
+
+After looking into it some _System.Reactive_ code and doing some research on it, it looks to me like this is sort of a known issue that is a tolerated side effect which can seldomly happen as additional checks to detect this between every operator would hurt performance.
+
 ---
-Important: when using System.Reactive.Unity it is crucial that
+Important: when using Rx.Unity it is crucial that
 `Rx.Unity.ReactiveUnity.SetupPatches()`
 is executed before any other reactive code to ensure the environment is properly configured for unity.
 
