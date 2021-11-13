@@ -44,6 +44,17 @@ namespace Rx.Unity.Linq {
             return new BatchFrame<T>(source, frameCount, frameCountType);
         }
 
+        /// <summary>
+        /// Emits the last value of each window if any. Each window is reset using the specified frameCount and frameCountType.
+        /// It always emits on the main thread.
+        /// (Same as `BatchFrame(frameCount, frameCountType).Select(x => x.Last())`; Default parameter for frameCountType differs!)
+        /// </summary>
+        public static IObservable<T> SampleFrame<T>(this IObservable<T> source, int frameCount = 0, FrameCountType frameCountType = FrameCountType.Update) {
+            if (source is null) throw new ArgumentNullException(nameof(source));
+            if (frameCount < 0) throw new ArgumentException("frameCount must be >= 0, frameCount:" + frameCount, nameof(frameCount));
+            return new DelayFrame<T>(source, frameCount, frameCountType);
+        }
+
         public static IObservable<T> DelayFrame<T>(this IObservable<T> source, int frameCount, FrameCountType frameCountType = FrameCountType.Update) {
             if (source is null) throw new ArgumentNullException(nameof(source));
             if (frameCount < 0) throw new ArgumentException("frameCount must be >= 0, frameCount:" + frameCount, nameof(frameCount));

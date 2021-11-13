@@ -52,7 +52,7 @@ jobs:
   build-unity:
     if: ${{ always() }}
     needs: [restore-sources, generate-environments]
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.cfg.buildOs }}
     strategy:
       fail-fast: false
       matrix:
@@ -89,7 +89,7 @@ jobs:
             ${{ matrix.cfg.buildArtifactPath }}
             !${{ matrix.cfg.buildArtifactPath }}/test_BackUpThisFolder_ButDontShipItWithYourGame
           retention-days: 1
-  run-tests-linux:
+  run-tests:
     needs: [build-unity, generate-environments]
     strategy:
       fail-fast: false

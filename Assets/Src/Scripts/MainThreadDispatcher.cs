@@ -12,7 +12,7 @@ using System.Reactive;
 
 namespace Rx.Unity {
     public sealed class MainThreadDispatcher : MonoBehaviour {
-        public enum CullingMode {
+        public enum CullingMode : byte {
             /// <summary>
             /// Won't remove any MainThreadDispatchers.
             /// </summary>
