@@ -38,7 +38,6 @@ class Tasks {
                 "Tests/Linq/ObservableSafetyTest.cs",
                 "Tests/Linq/QbservableTest.cs",
                 "Tests/Linq/QbservableExTest.cs",
-                "Tests/Linq/GenerateTest.cs", // pure testing
                 "obj/**/*.cs"
             ],
             nocase: true
