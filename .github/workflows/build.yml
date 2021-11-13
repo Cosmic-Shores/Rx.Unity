@@ -96,6 +96,7 @@ jobs:
       matrix:
         cfg: ${{fromJson(needs.generate-environments.outputs.matrix)}}
     runs-on: ${{ matrix.cfg.os }}
+    timeout-minutes: 30
     defaults:
       run:
         working-directory: ${{ matrix.cfg.buildArtifactPath }}
