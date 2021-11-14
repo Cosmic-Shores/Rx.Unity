@@ -49,12 +49,13 @@ class Tasks {
         .pipe(replace("public class ", "public partial class "))
         .pipe(replace("public void ForEachAsync_DisposeThrows()", "private void ForEachAsync_DisposeThrows()")) // sort of a workaround (as [Trait("SkipCI", "true")] isn't ignored)
         .pipe(replace("public void Virtual_ThreadSafety()", "private void Virtual_ThreadSafety()")) // sort of a workaround (as [Trait("SkipCI", "true")] isn't ignored)
-        .pipe(replace("public void Generate_LongRunning1()", "private void Generate_LongRunning1()")) // pure testing
-        .pipe(replace("public void Generate_LongRunning2()", "private void Generate_LongRunning2()")) // pure testing
-        .pipe(replace("public void Repeat_Inf_LongRunning()", "private void Repeat_Inf_LongRunning()")) // pure testing
-        .pipe(replace("public void ObserveOn_LongRunning_DisableOptimizations()", "private void ObserveOn_LongRunning_DisableOptimizations()")) // pure testing
-        .pipe(replace("public void EnumerableToObservable_LongRunning_Dispose()", "private void EnumerableToObservable_LongRunning_Dispose()")) // pure testing
-        .pipe(replace("public void EnumerableToObservable_LongRunning_Error()", "private void EnumerableToObservable_LongRunning_Error()")) // pure testing
+        .pipe(replace("public void Generate_LongRunning1()", "private void Generate_LongRunning1()")) // TestLongRunningScheduler causes issues with IL2CPP
+        .pipe(replace("public void Generate_LongRunning2()", "private void Generate_LongRunning2()")) // TestLongRunningScheduler causes issues with IL2CPP
+        .pipe(replace("public void Repeat_Inf_LongRunning()", "private void Repeat_Inf_LongRunning()")) // TestLongRunningScheduler causes issues with IL2CPP
+        .pipe(replace("public void ObserveOn_LongRunning_SameThread()", "private void ObserveOn_LongRunning_SameThread()")) // TaskPoolScheduler isn't supported when used with IL2CPP
+        .pipe(replace("public void ObserveOn_LongRunning_DisableOptimizations()", "private void ObserveOn_LongRunning_DisableOptimizations()")) // TaskPoolScheduler isn't supported when used with IL2CPP
+        .pipe(replace("public void EnumerableToObservable_LongRunning_Dispose()", "private void EnumerableToObservable_LongRunning_Dispose()")) // TestLongRunningScheduler causes issues with IL2CPP
+        .pipe(replace("public void EnumerableToObservable_LongRunning_Error()", "private void EnumerableToObservable_LongRunning_Error()")) // TestLongRunningScheduler causes issues with IL2CPP
         .pipe(dest(path.join(__dirname, "../Tests/Tests.System.Reactive")));
     }
 
