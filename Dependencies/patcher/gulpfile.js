@@ -52,6 +52,7 @@ class Tasks {
         .pipe(replace("public void Generate_LongRunning1()", "private void Generate_LongRunning1()")) // pure testing
         .pipe(replace("public void Generate_LongRunning2()", "private void Generate_LongRunning2()")) // pure testing
         .pipe(replace("public void Repeat_Inf_LongRunning()", "private void Repeat_Inf_LongRunning()")) // pure testing
+        .pipe(replace("public void ObserveOn_LongRunning_DisableOptimizations()", "private void ObserveOn_LongRunning_DisableOptimizations()")) // pure testing
         .pipe(replace("public void EnumerableToObservable_LongRunning_Dispose()", "private void EnumerableToObservable_LongRunning_Dispose()")) // pure testing
         .pipe(replace("public void EnumerableToObservable_LongRunning_Error()", "private void EnumerableToObservable_LongRunning_Error()")) // pure testing
         .pipe(dest(path.join(__dirname, "../Tests/Tests.System.Reactive")));
