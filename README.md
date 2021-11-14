@@ -1,6 +1,7 @@
 # Rx.Unity
 
 [![Build](https://github.com/Cosmic-Shores/Rx.Unity/actions/workflows/build.yml/badge.svg)](https://github.com/Cosmic-Shores/Rx.Unity/actions/workflows/build.yml)
+[![Publish](https://github.com/Cosmic-Shores/Rx.Unity/actions/workflows/publish.yml/badge.svg)](https://github.com/Cosmic-Shores/Rx.Unity/actions/workflows/publish.yml)
 [![openupm](https://img.shields.io/npm/v/com.rx.unity?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.rx.unity/)
 [![Unity 2021.2+](https://img.shields.io/badge/unity-2021.2%2B-blue.svg)](https://unity3d.com/get-unity/download)
 [![License](https://badgen.net/github/license/Naereen/Strapdown.js)](https://github.com/Cosmic-Shores/Rx.Unity/blob/master/LICENSE)
