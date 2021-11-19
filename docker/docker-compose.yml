@@ -1,0 +1,10 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:1-alpine
+    restart: unless-stopped
+    volumes:
+      - ../bin/UnitTest/WebGL_IL2CPP/test:/usr/share/nginx/html:ro
+      - ./nginx-conf.d:/etc/nginx/conf.d:ro
+    ports:
+      - 8082:80
