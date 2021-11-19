@@ -14,6 +14,7 @@ ObserveOnReactiveTest (maybe)
 EventLoopScheduler (maybe)
 
 ObservableConcurrencyTest
+DelaySubscriptionTest??
 ---
 Issuse with IL2CPP on UWP build
 (DurabilityTest)
@@ -29,3 +30,13 @@ don't use ThreadPoolScheduler.Instance, use ThreadPoolOnlyScheduler.Instance ins
 not supported:
 IQbservable / IQueryable stuff
 async ITaskObservable<int> stuff
+
+---
+
+current WebGL tests hanging up:
+AppendPrependTest_SchedulerRecursive
+AsyncSubjectTest_Await_Blocking
+AverageTest: ??
+BufferTest: ??
+CaseWithDefault_CheckDefault
+(only tested until CaseTest)
