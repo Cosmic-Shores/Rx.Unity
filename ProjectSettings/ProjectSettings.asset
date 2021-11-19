@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: RxUnityTest
+  productName: RxUnityTests
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -230,6 +230,22 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -247,6 +263,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Android: 
     Standalone: com.Company.ProductName
   buildNumber:
     Standalone: 0
@@ -776,10 +793,14 @@ PlayerSettings:
     Standalone: NO_NULLABLE_ATTRIBUTES;HAS_WINRT
     WebGL: NO_NULLABLE_ATTRIBUTES;HAS_WINRT
     Windows Store Apps: NO_NULLABLE_ATTRIBUTES;HAS_WINRT
-  additionalCompilerArguments: {}
+  additionalCompilerArguments:
+    Server:
+    - -nowarn:618
+    Standalone:
+    - -nowarn:618
   platformArchitecture: {}
   scriptingBackend:
-    Standalone: 1
+    Standalone: 0
     Windows Store Apps: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
