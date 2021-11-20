@@ -11,10 +11,12 @@ A lightweight layer on top of System.Reactive to add support for Unity in a simi
 
 Right now it requires some changes to System.Reactive in order to work but I'll try and create a PR to integrate required changes to the official System.Reactive repo soon.
 
-What already works:
+#### What already works:
+
 Backends:
 - [x] Mono (including CI tests)
 - [x] IL2CPP (including CI tests)
+
 Platforms:
 - [x] Windows/ Linux (including CI tests)
 - [x] UWP
