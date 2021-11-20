@@ -19,8 +19,8 @@ Platforms:
 - [x] Windows/ Linux (including CI tests)
 - [x] UWP
 - [x] Android
-- [?] Mac
-- [?] iOS
+- [ ] Mac (might work, coudn't test)
+- [ ] iOS (might work, coudn't test)
 - [ ] WebGL (somet things work)
 
 Part of the goal is to drop some legacy code from the UniRx code and start using a newer C# Syntax and framework versions.
