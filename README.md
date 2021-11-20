@@ -11,12 +11,31 @@ A lightweight layer on top of System.Reactive to add support for Unity in a simi
 
 Right now it requires some changes to System.Reactive in order to work but I'll try and create a PR to integrate required changes to the official System.Reactive repo soon.
 
-This is still work in progress.
-A few tests still need fixing and alot of AoT issues need to be fixed / added hacks to enforce generic type generation for.
+What already works:
+Backends:
+- [x] Mono (including CI tests)
+- [x] IL2CPP (including CI tests)
+Platforms:
+- [x] Windows/ Linux (including CI tests)
+- [x] UWP
+- [x] Android
+- [?] Mac
+- [?] iOS
+- [ ] WebGL (somet things work)
 
 Part of the goal is to drop some legacy code from the UniRx code and start using a newer C# Syntax and framework versions.
-This also means that older versions of unity won't be supported (Versions >= 2021 should work - testing is currently happening in the unity beta version only)
+This also means that older versions of unity won't be supported. (Unity 2021.2+ is required)
 
+## Requirements
+Your project must contain the following libraries somewhere:
+
+- System.Reactive.dll (>= 5.0.0; eg. from NuGet*)
+- Rx.Extendibility.dll (>= 1.0.2; eg. from NuGet*)
+- Rx.Data.dll (>= 1.0.2; eg. from NuGet*)
+
+\* needs to be build from source and as System.Reactive still needs a minor change that hasn't been integrated yet. Since System.Reactive is also signed Rx.Extendibility and Rx.Data also need to be recompiled to work with an unsigned version of System.Reactive. You can aquire the DLLs by running ./build-dependencies.bat in the repository root (you need docker with buildkit for this). After this the required DLLs can be found in ./Dependencies/out/.
+
+## Features
 Other than the basic scheduling these are the features I moved over from UniRx:
 
 Assembly: Rx.Data
